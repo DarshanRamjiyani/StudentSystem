@@ -1,0 +1,22 @@
+{
+  "name": "studentsystem",
+  "version": "1.0.0",
+  "description": "Darshan's training project in Node Express JS at DIT.",
+  "main": "script.js",
+  "scripts": {
+    "develop": "node script.js"
+  },
+  "author": "Darshan Ramjiyani",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-handlebars": "^6.0.6",
+    "express-session": "^1.17.3",
+    "knex": "^2.3.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1"
+  }
+}
