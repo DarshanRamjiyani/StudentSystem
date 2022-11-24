@@ -7,16 +7,16 @@
     <title>Dashboard &mdash; Student System</title>
 
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.1/dist/bootstrap-table.min.css">
+    <script src="https://unpkg.com/bootstrap-table@1.21.1/dist/bootstrap-table.min.js"></script>
 
     <!-- CSS Libraries -->
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="../public/assets/css/style.css">
-    <link rel="stylesheet" href="./public//assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/components.css">
 </head>
 
 <body>
@@ -25,19 +25,14 @@
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
                 <form class="form-inline mr-auto">
-                    <ul class="navbar-nav mr-3">
-                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i
-                                    class="fas fa-bars"></i></a></li>
-                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
-                                    class="fas fa-search"></i></a></li>
-                    </ul>
+
                 </form>
                 <ul class="navbar-nav navbar-right">
 
                     <li class="dropdown"><a href="#" data-toggle="dropdown"
                             class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Namaskaar Shrimaan!</div>
+                            <img alt="image" src="/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+                            <div class="d-sm-none d-lg-inline-block">Namaskaar Admin</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="#" class="dropdown-item has-icon text-danger">
@@ -63,14 +58,15 @@
                         </li>
 
                         <li class="menu-header">Database Operations</li>
-                        <li class="nav-item"><a class="nav-link" href="../views/insert.html"><i class="fas fa-user-plus"></i>
-                            <span>Insert</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="../views/insertMany.html"><i class="fa fa-users"></i>
-                            <span>Bulky Insert</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="../views/update.html"><i class="fa fa-sync"></i>
-                            <span>Update</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="../views/remove.html"><i class="fa fa-trash"></i>
-                            <span>Remove</span></a></li>
+                        <li class="active"><a class="nav-link" href="/student/register"><i class="fas fa-user-plus"></i>
+                                <span>Insert</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/student/register/many"><i
+                                    class="fa fa-users"></i>
+                                <span>Bulky Insert</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/student/update"><i class="fa fa-sync"></i>
+                                <span>Update</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href="/student/remove"><i class="fa fa-trash"></i>
+                                <span>Remove</span></a></li>
                     </ul>
                 </aside>
             </div>
@@ -83,10 +79,90 @@
                     </div>
 
                     <div class="section-body">
-                        <div class="card card-light text-center justify-content-center" style="height:400px; background: linear-gradient(#6777ef, #17a2b8);">
-                            <h1 class="text-light">Welcome to DIT</h1>
-                        </div>
-                    </div>
+                        <h2 class="section-title">Student(s)</h2>
+                        <p class="section-lead">Registered student are listed below. To update student data just refer
+                            to the Action Buttons listed at last column.</p>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Registered Student</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-md">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Image</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Age</th>
+                                                    <th>Subjects</th>
+                                                    <th>Average Score</th>
+                                                    <th>Grade</th>
+                                                    <th>Action Button</th>
+                                                </tr>
+                                                <% let count=1; if (data.numRows !=='undefined' && data.numRows !==null
+                                                    && data.numRows> 0) {
+                                                    data.userData.forEach(element => { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= count %>
+                                                        </td>
+                                                        <td>
+                                                            <%= element.firstName %>
+                                                        </td>
+                                                        <td>
+                                                            <%= element.lastName %>
+                                                        </td>
+                                                        <td>
+                                                            <%= element.age %>
+                                                        </td>
+                                                        <td>
+                                                            <%= element.subjects %>
+                                                        </td>
+                                                        <td>
+                                                            <%= element.avgScore %>
+                                                        </td>
+                                                        <td>
+                                                            <%= element.grade %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/student/update/<%= element.id %>"><i
+                                                                    class="fa fa-pen"></i></a>
+                                                            <a href="/student/remove/<%= element.id %>"><i
+                                                                    class="fa fa-bin"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <% count++; }); } %>
+
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="card-footer text-right">
+                                        <nav class="d-inline-block">
+                                            <ul class="pagination mb-0">
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" href="#" tabindex="-1"><i
+                                                            class="fas fa-chevron-left"></i></a>
+                                                </li>
+                                                <li class="page-item active"><a class="page-link" href="#">1 <span
+                                                            class="sr-only">(current)</span></a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">2</a>
+                                                </li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#"><i
+                                                            class="fas fa-chevron-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div> -->
+                                </div>
+                            </div>
                 </section>
             </div>
             <footer class="main-footer">
@@ -101,8 +177,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-    <script src="../public/assets/js/scripts.js"></script>
-    <script src="../public/assets/js/stisla.js"></script>
+    <script src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/stisla.js"></script>
+   
 
 </body>
 

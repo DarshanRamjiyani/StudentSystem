@@ -8,26 +8,14 @@ const password = '';
 
 const database = 'student_system';
 
-function getMySqlConnection(){
+async function getMySqlConnectionConfig(){
     let connection = mysql.createConnection({
         host: host,
         user: user,
         password: password,
         database: database
     });
-
-    connection.connect((error)=> {
-        if(!error)
-        {
-            console.log('Connection Established Successfully');
-            return connection;
-        }
-        else
-        {
-            console.log('Connection Failed!'+ JSON.stringify(error,undefined,2));
-            return null;
-        }
-    });
+    return connection
 }
 
-module.exports = {getMySqlConnection};
+module.exports = {getMySqlConnectionConfig};

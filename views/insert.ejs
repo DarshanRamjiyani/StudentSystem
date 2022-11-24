@@ -2,21 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport" />
     <title>Insert Student &mdash; Student System</title>
 
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
 
     <!-- CSS Libraries -->
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="../public/assets/css/style.css">
-    <link rel="stylesheet" href="./public//assets/css/components.css">
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/components.css" />
 </head>
 
 <body>
@@ -26,21 +24,26 @@
             <nav class="navbar navbar-expand-lg main-navbar">
                 <form class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
-                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i
-                                    class="fas fa-bars"></i></a></li>
-                        <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
-                                    class="fas fa-search"></i></a></li>
+                        <li>
+                            <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i
+                                    class="fas fa-bars"></i></a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i
+                                    class="fas fa-search"></i></a>
+                        </li>
                     </ul>
                 </form>
                 <ul class="navbar-nav navbar-right">
-
-                    <li class="dropdown"><a href="#" data-toggle="dropdown"
-                            class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">Namaskaar Shrimaan!</div>
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                            <img alt="image" src="/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1" />
+                            <div class="d-sm-none d-lg-inline-block">
+                                Namaskaar Shrimaan!
+                            </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item has-icon text-danger">
+                            <a href="/admin/logout" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </div>
@@ -58,19 +61,26 @@
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
                         <li class="nav-item">
-                            <a href="../views/dashboard.html" class="nav-link"><i class="fas fa-home"></i>
-                                <span>Home</span></a>
+                            <a href="/student/get" class="nav-link"><i class="fas fa-home"></i> <span>Home</span></a>
                         </li>
 
                         <li class="menu-header">Database Operations</li>
-                        <li class="active"><a class="nav-link" href="../views/insert.html"><i class="fas fa-user-plus"></i>
-                            <span>Insert</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="../views/insertMany.html"><i class="fa fa-users"></i>
-                            <span>Bulky Insert</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="../views/update.html"><i class="fa fa-sync"></i>
-                            <span>Update</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="../views/remove.html"><i class="fa fa-trash"></i>
-                            <span>Remove</span></a></li>
+                        <li class="active">
+                            <a class="nav-link" href="/student/register"><i class="fas fa-user-plus"></i>
+                                <span>Insert</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/student/register/many"><i class="fa fa-users"></i> <span>Bulky
+                                    Insert</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/student/update"><i class="fa fa-sync"></i>
+                                <span>Update</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/student/remove"><i class="fa fa-trash"></i>
+                                <span>Remove</span></a>
+                        </li>
                     </ul>
                 </aside>
             </div>
@@ -83,13 +93,136 @@
                     </div>
 
                     <div class="section-body">
-                        
-                    </div>
+                        <h2 class="section-title">
+                            Insert a single student by filling the form below or bulk insert
+                            by uploading <em>.csv</em> file.
+                        </h2>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Singular Insert</h4>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <form name="singleRegistration" enctype="multipart/form-data" action="/student/register/initiate"
+                                            method="POST">
+                                            <div class="form-group">
+                                                <label>Image</label>
+                                                <div class="custom-file">
+                                                    <input type="file" accept=".png,.jpeg,.jpg" class="custom-file-input" id="userImage" name="userImage">
+                                                    <label class="custom-file-label" for="userImage">Choose
+                                                        file</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>First name</label>
+                                                <input type="text" name="firstName"
+                                                    class="form-control form-control-sm" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Last name</label>
+                                                <input type="text" name="lastName"
+                                                    class="form-control form-control-sm" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Age</label>
+                                                <select class="form-control form-control-sm" name="age">
+                                                    <% for(let i=5; i<=18; i++){ %>
+                                                        <option value="<%= i %>">
+                                                            <%= i %> Years
+                                                        </option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Subject</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="subjects"
+                                                        value="C Language" />
+                                                    <label class="form-check-label" for="defaultCheck2">
+                                                        C Language
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="subjects"
+                                                        value="Python" />
+                                                    <label class="form-check-label" for="defaultCheck2">
+                                                        Python
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="subjects"
+                                                        value="Node" />
+                                                    <label class="form-check-label" for="defaultCheck2">
+                                                        Node
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="subjects"
+                                                        value="Sanskrit" />
+                                                    <label class="form-check-label" for="defaultCheck2">
+                                                        Sanskrit
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Average Score</label>
+                                                <input type="text" name="avgScore"
+                                                    class="form-control form-control-sm" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Grade</label>
+                                                <select class="form-control" name="grade">
+                                                    <option value="A">A</option>
+                                                    <option value="B">B</option>
+                                                    <option value="C">C</option>
+                                                    <option value="D">D</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-primary" name="action"
+                                                    value="Submit Data" />
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4>Multiple Insert</h4>
+                                    </div>
+                                    <form name="multipleRegistration" action="/student/register/initiate" enctype="multipart/form-data"
+                                        method="POST">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label>Choose <em>.csv</em> file</label>
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" accept=".csv" id="studentDataFile" name="studentDataFile">
+                                                    <label class="custom-file-label" for="studentDataFile">Choose
+                                                        file</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-primary" name="action"
+                                                    value="Submit File" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                 </section>
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
-                    <div class="bullet"></div> Copyright &copy; DIT Interactive Pvt. Ltd.
+                    <div class="bullet"></div>
+                    Copyright &copy; DIT Interactive Pvt. Ltd.
                 </div>
             </footer>
         </div>
@@ -98,10 +231,23 @@
     <!-- General JS Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="../public/assets/js/scripts.js"></script>
-    <script src="../public/assets/js/stisla.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+    <script src="/assets/js/scripts.js"></script>
+    <script src="/assets/js/stisla.js"></script>
+    <script>
+        $('#userImage').change(function () {
+            var i = $(this).prev('label').clone();
+            var file = $('#userImage')[0].files[0].name;
+            $(this).prev('label').text(file);
+        });
+        $('#studentDataFile').change(function () {
+            var i = $(this).prev('label').clone();
+            var file = $('#studentDataFile')[0].files[0].name;
+            $(this).prev('label').text(file);
+        });
 
+
+    </script>
 </body>
 
 </html>

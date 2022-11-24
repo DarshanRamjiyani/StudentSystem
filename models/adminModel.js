@@ -9,46 +9,72 @@ const field_fullName = "full_name";
 const field_username = "username";
 const field_authkey = "authkey";
 
-function getAuthKey(username){
-  
-  let connection = baseModel.getMySqlConnection();
-
-  if(connection != null)
-  {
-    connection.query('SELECT `'+ field_authkey +'` FROM '+table+' WHERE username="'+username+'" LIMIT 1;', (error, row, fields) => {
-      if(!error)
-      {
-        return row;
-      }
-      else{
-        console.log(error);
-      }
-    });
-  }
-}
-
-
-function registerAdmin(fullName, username, authkey)
-{
-  console.log("registerAdmin - true");
-  let connection = baseModel.getMySqlConnection();
-
-  if(connection)
-  {
-    console.log("IF");
-    let query = 'INSERT INTO `'+table+'` (`'+field_fullName+'`, `'+field_username+'`, `'+field_authkey+'`) VALUES("'+fullName+'", "'+username+'", "'+authkey+'");';
-    console.log(query);
-    connection.query(query, (error, row, fields) => {
-      if(!error)
-      {
-        console.log("Row data : " + row);
-        return row;
-      }
-      else{
-        console.log(error);
+async function getAuthKey(username) {
+  return new Promise((resolve, reject) => {
+    baseModel.getMySqlConnectionConfig().then((connection) => {
+      if (connection != null) {
+        const sql =
+          "SELECT `" +
+          field_authkey +
+          "` FROM " +
+          table +
+          ' WHERE username="' +
+          username +
+          '" LIMIT 1;';
+        connection.query(sql, (error, row, fields) => {
+          if (!error) {
+            resolve( row[0]["authkey"])
+          } else {
+            console.log(error);
+            reject(error);
+          }
+        });
       }
     });
-  }
+  });
 }
 
-module.exports = {getAuthKey, registerAdmin};
+async function registerAdmin(fullName, username, authkey) {
+  baseModel.getMySqlConnectionConfig().then(
+    (connection) => {
+      connection.connect((error) => {
+        if (!error) {
+          if (connection) {
+            let query =
+              "INSERT INTO `" +
+              table +
+              "` (`" +
+              field_fullName +
+              "`, `" +
+              field_username +
+              "`, `" +
+              field_authkey +
+              '`) VALUES("' +
+              fullName +
+              '", "' +
+              username +
+              '", "' +
+              authkey +
+              '");';
+            connection.query(query, (error, row, fields) => {
+              if (!error) {
+                return row;
+              } else {
+                console.log(error);
+              }
+            });
+          }
+        } else {
+          console.log(
+            "Connection Failed!" + JSON.stringify(error, undefined, 2)
+          );
+        }
+      });
+    },
+    (error) => {
+      console.log("Error");
+    }
+  );
+}
+
+module.exports = { getAuthKey, registerAdmin };

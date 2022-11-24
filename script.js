@@ -1,19 +1,19 @@
 const express = require("express");
 const bodyparser = require("body-parser");
-const session = require("express-session");
-
-let app = express();
-app.use(bodyparser.json());
-app.set('view engine', 'ejs');
-
+/* const session = require("express-session"); */
 const publicDir = require('path').join(__dirname,'/public'); 
-app.use(express.static(publicDir)); 
 
-app.use('/', require('./routes/baseRoutes'));
+const app = express();
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.use(express.static(publicDir)); 
+app.use('/', require('./routes/routes'));
 
 app.all('*', (request, response) => {
     console.log("not found : "+request.url);
-    response.render('error');    
 });
 
 const PORT = process.env.PORT || 4111;
