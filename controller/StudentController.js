@@ -1,30 +1,9 @@
-/**
- * Controller for requests that are related to the student.
- *
- * @author Darshan Ramjiyani
- *
- */
-
-const e = require("express");
-const { request, response } = require("express");
 const studentModel = require("../models/studentModel");
 
-const insertOneView = (request, response) => {
-        response.render("../views/insert");
-};
-const insertManyView = (request, response) => {
-        response.render("../views/insertMany");
-};
-const updateView = (request, response) => {
-        response.render("../views/update");
-};
-const removeView = (request, response) => {
-        response.render("../views/remove");
-};
-const listView = (request, response) => {
+function listView(request, response) {
         studentModel.getRecord("*", null, null).then(
                 (rows) => {
-                        const dataForView = { userData: null, numRows: null, isError: true}; 
+                        const dataForView = { userData: null, numRows: null, isError: true };
                         if (rows.length > 0) {
                                 dataForView.isError = false;
                                 dataForView.userData = rows;
@@ -34,60 +13,85 @@ const listView = (request, response) => {
                                 dataForView.numRows = 0;
                                 console.log('0 entry in database.');
                         }
-
-                        response.render('../views/dashboard', {data: dataForView});
+                        console.log(dataForView);
+                        response.render('../views/dashboard', { data: dataForView });
                 },
                 (error) => {
                         console.log(error);
                 }
         );
 };
+function insertView(request, response) {
+        response.render('../views/insert');
+}
+function updateView(request, response) {
+        studentModel.getRecord("*", "`id` = "+request.params.userId, 1).then(
+                (rows) => {
+                        const dataForView = { userData: null, numRows: null, isError: true };
+                        if (rows.length > 0) {
+                                dataForView.isError = false;
+                                dataForView.userData = rows;
+                                dataForView.numRows = rows.length;
+                                
+                                console.log("DATA : ", dataForView);
+                                response.render('../views/update', { data: dataForView });
 
-const insertInitiative = (request, response) => {
-        const { action } = request.body;
-        let fileMetaData = getFileFromRequestBody(request, request.files.studentDataFile);
-
-        if (!fileMetaData.isError) {
-                if (action === "Submit Data") {
-                        let data = [{
-                                firstName: request.body.fullName,
-                                lastName: request.body.lastName,
-                                age: request.body.age,
-                                grade: request.body.grade,
-                                subjects: request.body.subjects,
-                                avgScore: request.body.avgScore,
-                                image: fileMetaData.uploadLocation
-                        }];
-                        console.log(data);
-                        studentModel.insertRecord(data);
+                        } else {
+                                dataForView.userData = null;
+                                dataForView.numRows = 0;
+                                console.log('0 entry in database.');
+                                response.redirect("/student/get");
+                        }
+                },
+                (error) => {
+                        console.log("Database error.");
                 }
-                else if (action === "Submit File") {
-                        const fs = require("fs");
-                        const { parse } = require("csv-parse");
-                        fs.createReadStream(fileMetaData.uploadLocation)
-                                .pipe(parse({ delimiter: ",", from_line: 2 }))
-                                .on("data", function (row) {
-                                        let data = [{
-                                                firstName: row[1],
-                                                lastName: row[2],
-                                                age: row[3],
-                                                subjects: row[4],
-                                                grade: row[5],
-                                                avgScore: row[6],
-                                                image: row[7]
-                                        }];
-                                        console.log(data);
-                                        studentModel.insertRecord(data);
-                                });
-                }
-        }
-        else {
-                console.log("File cannot be read due to error in upload operation.");
-        }
-        response.redirect("/student");
+        );
+}
+function insertInitiative(req, res) {
+        console.log(req);
+        let data = [{
+                firstName: req.query.firstName,
+                lastName: req.query.lastName,
+                age: req.query.age,
+                grade: req.query.grade,
+                subjects: req.query.subjects,
+                avgScore: req.query.avgScore,
+        }];
+        console.log(data);
+        studentModel.insertRecord(data);
+        res.redirect('/student/register');
 };
-const updateInitiative = (request, response) => { };
-const removeInitiative = (request, response) => { };
+
+function updateInitiative(request, response) {
+        if (request.params.userId === "" || request.params.userId === 'undefined') {
+                response.status(400).send('Please provide user id to perform task.');
+                return;
+        }
+        
+        let data = [{
+                first_name: request.query.firstName,
+                last_name: request.query.lastName,
+                age: request.query.age,
+                grade: request.query.grade,
+                subjects: request.query.subjects,
+                avg_score: request.query.avgScore,
+        }];
+
+        studentModel.updateRecord(request.params.userId, data);
+        response.redirect("/student/get");
+};
+
+function removeInitiative(request, response) {
+
+        if (request.params.userId === "" || request.params.userId === 'undefined') {
+                response.status(400).send('Please provide user id to perform task.');
+                return;
+        }
+
+        studentModel.removeRecord(request.params.userId);
+        response.redirect("/student/get");
+};
 
 
 function getFileFromRequestBody(req, fileInputField) {
@@ -118,13 +122,32 @@ function getFileFromRequestBody(req, fileInputField) {
         });
         return dataToReturn;
 }
+async function upload_csv()
+{
+        const fs = require("fs");
+        const { parse } = require("csv-parse");
+        fs.createReadStream("D:\\StudentSystem\\public\\assets\\student_details.csv")
+                .pipe(parse({ delimiter: ",", from_line: 2 }))
+                .on("data", function (row) {
+                        let data = [{
+                                firstName: row[1],
+                                lastName: row[2],
+                                age: row[3],
+                                subjects: row[4],
+                                grade: row[5],
+                                avgScore: row[6],
+                                image: row[7]
+                        }];
+                        console.log("Data to be insert : ", data);
+                        studentModel.insertRecord(data);
+                });
+}
 module.exports = {
-        insertOneView,
-        insertManyView,
-        updateView,
-        removeView,
         listView,
+        insertView,
+        updateView,
         insertInitiative,
         updateInitiative,
         removeInitiative,
+        upload_csv,
 };

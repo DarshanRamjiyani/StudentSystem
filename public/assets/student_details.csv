@@ -1,0 +1,21 @@
+id,FirstName,LastName,age,subjects,grade,average_score,Image (Use Dummy Images)
+1,john,Doe,17,"maths,history,computer science",A+,90.1,Image1.jpg
+2,alex,Doe,18,"maths,history,biology",A,91,Image2.jpg
+3,mike,Doe,19,"maths,history,biology",B+,80,Image3.jpg
+4,yohan,Doe,18,"maths,history,computer science",C,85,Image4.jpg
+5,rex,Doe,19,"maths,history,biology",A+,92,Image5.jpg
+6,pret,Doe,17,"maths,history,computer science",A,95.5,Image6.jpg
+7,sean,Doe,18,"maths,history,biology",B+,97.6,Image7.jpg
+8,robert,Doe,19,"maths,history,computer science",C,92,Image8.jpg
+9,judith,Doe,17,"maths,history,biology",A+,95.5,Image9.jpg
+10,eunice,Doe,18,"maths,history,computer science",A,97.6,Image10.jpg
+11,craig,Doe,19,"maths,history,biology",B+,91,Image11.jpg
+12,jack,Doe,19,"maths,history,computer science",C,80,Image12.jpg
+13,dan,Doe,17,"maths,history,biology",A+,85,Image13.jpg
+14,dana,Doe,18,"maths,history,computer science",A,95.5,Image14.jpg
+15,ann,Doe,17,"maths,history,biology",B+,97.6,Image15.jpg
+16,melissa,Doe,19,"maths,history,computer science",C,91,Image16.jpg
+17,patricia,Doe,18,"maths,history,biology",A+,80,Image17.jpg
+18,jill,Doe,19,"maths,history,computer science",A,85,Image18.jpg
+19,carol,Doe,17,"maths,history,biology",B+,95.5,Image19.jpg
+20,joyce,Doe,19,"maths,history,computer science",C,97.6,Image20.jpg

@@ -21,8 +21,10 @@ async function getAuthKey(username) {
           ' WHERE username="' +
           username +
           '" LIMIT 1;';
+          console.log(sql);
         connection.query(sql, (error, row, fields) => {
           if (!error) {
+            console.log("ROW : ", row);
             resolve( row[0]["authkey"])
           } else {
             console.log(error);
@@ -40,6 +42,7 @@ async function registerAdmin(fullName, username, authkey) {
       connection.connect((error) => {
         if (!error) {
           if (connection) {
+            let md5 =  require('md5');
             let query =
               "INSERT INTO `" +
               table +
@@ -54,7 +57,7 @@ async function registerAdmin(fullName, username, authkey) {
               '", "' +
               username +
               '", "' +
-              authkey +
+              md5(authkey) +
               '");';
             connection.query(query, (error, row, fields) => {
               if (!error) {

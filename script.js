@@ -1,21 +1,27 @@
 const express = require("express");
-const bodyparser = require("body-parser");
-/* const session = require("express-session"); */
-const publicDir = require('path').join(__dirname,'/public'); 
-
+const publicDir = require('path').join(__dirname,'/public');
 const app = express();
-
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(express.static(publicDir)); 
 app.use('/', require('./routes/routes'));
-
 app.all('*', (request, response) => {
     console.log("not found : "+request.url);
 });
+const oneDay = 1000 * 60 * 60 * 24;
 
+app.use(sessions({
+    name: "user_id_fication",
+    secret: "jkejiq0b2j",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false 
+}));
+app.use(cookieParser());
 const PORT = process.env.PORT || 4111;
 
 let server = app.listen(PORT, function(){

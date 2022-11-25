@@ -56,31 +56,16 @@
                         <span>DIT Interactive</span>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">DIT</a>
+                        <a href="/student/get">DIT</a>
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class="nav-item">
-                            <a href="/student/get" class="nav-link"><i class="fas fa-home"></i> <span>Home</span></a>
+                        <li>
+                            <a href="/student/get" class="nav-link"><i class="fas fa-home"></i>
+                                <span>View Student</span></a>
                         </li>
-
-                        <li class="menu-header">Database Operations</li>
-                        <li class="active">
-                            <a class="nav-link" href="/student/register"><i class="fas fa-user-plus"></i>
-                                <span>Insert</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/student/register/many"><i class="fa fa-users"></i> <span>Bulky
-                                    Insert</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/student/update"><i class="fa fa-sync"></i>
-                                <span>Update</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/student/remove"><i class="fa fa-trash"></i>
-                                <span>Remove</span></a>
-                        </li>
+                        <li class="active"><a class="nav-link" href="/student/register"><i class="fas fa-user-plus"></i>
+                            <span>Register Student</span></a></li>
                     </ul>
                 </aside>
             </div>
@@ -94,40 +79,38 @@
 
                     <div class="section-body">
                         <h2 class="section-title">
-                            Insert a single student by filling the form below or bulk insert
-                            by uploading <em>.csv</em> file.
+                            Insert a single student by filling the form below.
                         </h2>
                         <div class="row">
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col" >
                                 <div class="card">
                                     <div class="card-header">
                                         <h4>Singular Insert</h4>
                                     </div>
 
                                     <div class="card-body">
-                                        <form name="singleRegistration" enctype="multipart/form-data" action="/student/register/initiate"
-                                            method="POST">
-                                            <div class="form-group">
+                                        <form action="/student/register/initiate" method="get" id="documentForm">
+                                            <!-- <div class="form-group">
                                                 <label>Image</label>
                                                 <div class="custom-file">
-                                                    <input type="file" accept=".png,.jpeg,.jpg" class="custom-file-input" id="userImage" name="userImage">
-                                                    <label class="custom-file-label" for="userImage">Choose
+                                                    <input type="file" accept=".png,.jpeg,.jpg" class="custom-file-input" id="uploadedFile1" name="uploadedFile">
+                                                    <label class="custom-file-label" for="userImage" id="uploadedFileLabel1">Choose
                                                         file</label>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="form-group">
                                                 <label>First name</label>
-                                                <input type="text" name="firstName"
+                                                <input type="text" name="firstName" id="firstName"
                                                     class="form-control form-control-sm" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Last name</label>
-                                                <input type="text" name="lastName"
+                                                <input type="text" name="lastName" id="lastName"
                                                     class="form-control form-control-sm" />
                                             </div>
                                             <div class="form-group">
                                                 <label>Age</label>
-                                                <select class="form-control form-control-sm" name="age">
+                                                <select class="form-control form-control-sm" name="age" id="age">
                                                     <% for(let i=5; i<=18; i++){ %>
                                                         <option value="<%= i %>">
                                                             <%= i %> Years
@@ -138,7 +121,7 @@
                                             <div class="form-group">
                                                 <label>Subject</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="subjects"
+                                                    <input class="form-check-input" type="checkbox" name="subjects" id="subjects"
                                                         value="C Language" />
                                                     <label class="form-check-label" for="defaultCheck2">
                                                         C Language
@@ -146,21 +129,21 @@
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" name="subjects"
-                                                        value="Python" />
+                                                        value="Python" id="chkPython" />
                                                     <label class="form-check-label" for="defaultCheck2">
                                                         Python
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" name="subjects"
-                                                        value="Node" />
+                                                        value="Node" id="chkNode" />
                                                     <label class="form-check-label" for="defaultCheck2">
                                                         Node
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" name="subjects"
-                                                        value="Sanskrit" />
+                                                        value="Sanskrit" id="chkSanskrit" />
                                                     <label class="form-check-label" for="defaultCheck2">
                                                         Sanskrit
                                                     </label>
@@ -191,19 +174,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <!-- <div class="col-12 col-md-6 col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
                                         <h4>Multiple Insert</h4>
                                     </div>
-                                    <form name="multipleRegistration" action="/student/register/initiate" enctype="multipart/form-data"
-                                        method="POST">
+                                    <form name="multipleRegistration" action="" 
+                                    encType="multipart/form-data" method="post" id="fileForm">
                                         <div class="card-body">
                                             <div class="form-group">
                                                 <label>Choose <em>.csv</em> file</label>
                                                 <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" accept=".csv" id="studentDataFile" name="studentDataFile">
-                                                    <label class="custom-file-label" for="studentDataFile">Choose
+                                                    <input type="file" class="custom-file-input" accept=".csv" id="uploadedFile2" name="uploadedFile">
+                                                    <label class="custom-file-label" for="uploadedFile2" id="uploadedFileLabel2">Choose
                                                         file</label>
                                                 </div>
                                             </div>
@@ -212,9 +195,13 @@
                                                 <input type="submit" class="btn btn-primary" name="action"
                                                     value="Submit File" />
                                             </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="text-danger" id="status"></label>
+                                            </div>
                                         </div>
                                     </form>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                 </section>
@@ -234,16 +221,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="/assets/js/scripts.js"></script>
     <script src="/assets/js/stisla.js"></script>
+    <script src="/assets/js/insertHelpers.js"></script>
     <script>
-        $('#userImage').change(function () {
+        $('#uploadedFile1').change(function () {
             var i = $(this).prev('label').clone();
-            var file = $('#userImage')[0].files[0].name;
-            $(this).prev('label').text(file);
+            var file = $('#uploadedFile1')[0].files[0].name;
+            $('#uploadedFileLabel1').text(file);
         });
-        $('#studentDataFile').change(function () {
+        $('#uploadedFile2').change(function () {
             var i = $(this).prev('label').clone();
-            var file = $('#studentDataFile')[0].files[0].name;
-            $(this).prev('label').text(file);
+            var file = $('#uploadedFile2')[0].files[0].name;
+            $('#uploadedFileLabel2').text(file);
         });
 
 

@@ -4,61 +4,59 @@
  * @author Darshan Ramjiyani
  *
  */
-
-const { request, response } = require("express");
+const session = require('express-session');
+let md5 = require('md5');
 
 const loginView = (request, response) => {
-  response.render("../views/login.ejs", {isMessageToast: false});
+  response.render("../views/login.ejs", { isMessageToast: false });
 };
 
 const registerView = (request, response) => {
-  response.render("../views/register.ejs", {isMessageToast: false});
+  response.render("../views/register.ejs", { isMessageToast: false });
 };
 
 const loginInitiation = (request, response) => {
   const admin = require("../models/adminModel");
-  const {username, password} = request.body;
-  const toast = { "message" : null}
+  const { username, password } = request.body;
+  const toast = { "message": null }
 
-  if(username && password )
-  {
-    admin.getAuthKey(username).then( (result) => {
+  if (username && password) {
+    admin.getAuthKey(username).then((result) => {
 
-      if (password === result)
-      {
+      if (md5(password) === result) {
         response.redirect('/student/get');
-      }else{
+      } else {
         toast.message = "Login credentials mismatched. Try again.";
         console.log(toast.message);
-        response.render("../views/login.ejs", {isMessageToast: true, toast: toast});
+        response.render("../views/login.ejs", { isMessageToast: true, toast: toast });
       }
     }).catch(error => {
       console.log(error)
     });
   }
-  else
-  {
+  else {
     toast.message = "Username and password is not valid.";
     console.log(toast.message);
-    response.render("../views/login.ejs", {isMessageToast: true, toast: toast});
+    response.render("../views/login.ejs", { isMessageToast: true, toast: toast });
   }
 };
 
 const registerInitiation = (request, response) => {
   const admin = require("../models/adminModel");
-  const { fullName,username, password } = request.body;
-  
-  const toast = { "message" : null}
-  if(username && password && fullName){
+  const { fullName, username, password } = request.body;
+
+  const toast = { "message": null }
+  if (username && password && fullName) {
     admin.registerAdmin(
       fullName,
       username,
       password
     ).then((row) => {
       toast.message = "Admin has been registered successfully. Please go to login page.";
-      response.render("../views/register.ejs", {'toast': toast, 'isMessageToast': true});
-  });
-}}
+      response.render("../views/register.ejs", { 'toast': toast, 'isMessageToast': true });
+    });
+  }
+}
 
 const logout = (request, response) => {
   response.redirect('/admin/login');
